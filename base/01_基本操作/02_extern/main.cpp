@@ -8,10 +8,12 @@
 // 错误写法
 // #include "sum.h" 没有 效果 定义的是 C++ , 找 SUM_int_int
 // 正确写法
-// 方式1
-extern "C" {
-#include "sum.h" // 项目有问题, 先不用
-}
+// 方式1 包裹
+//extern "C" {
+//#include "sum.h"
+//}
+// 方式2 在 sum.h 写入特殊内容
+#include "sum.h"
 
 
 
