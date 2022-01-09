@@ -5,13 +5,22 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(testOne base/01_基本操作/01_函数重载/main.cpp)
 
-project(02_extern)
-file(GLOB 02_extern_SRC
-        base/01_基本操作/02_extern/*.cpp
-        base/01_基本操作/02_extern/*.c
-        base/01_基本操作/02_extern/*.h)
-add_executable(02_extern ${02_extern_SRC})
+#第2个项目
+set(myPath 02_extern)
+set(myProName 02_Pro)
+project(${myProName})
+file(GLOB ${myProName}
+        base/01_基本操作/${myPath}/*.cpp
+        base/01_基本操作/${myPath}/*.c
+        base/01_基本操作/${myPath}/*.h)
+add_executable(${myProName} ${${myProName}})
 
-
-#project(03_extern)
-#add_executable(03_extern base/01_基本操作/02_extern/main.cpp)
+#第3个项目
+set(myPath 03_默认参数)
+set(myProName 03_Proj)
+project(${myProName})
+file(GLOB ${myProName}
+        base/01_基本操作/${myPath}/*.cpp
+        base/01_基本操作/${myPath}/*.c
+        base/01_基本操作/${myPath}/*.h)
+add_executable(${myProName} ${${myProName}})
