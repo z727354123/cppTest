@@ -3,20 +3,20 @@ using namespace std;
 
 
 
-int sum(int i, int j) {
-    return i + j;
-}
-
-
-
-int sum(int i, double j) {
-    return i * j;
-}
+//int sum(int i, int j) {
+//    return i + j + 10;
+//}
+//
+//
+//
+//int sum(int i, double j) {
+//    return i * j;
+//}
 
 
 void 函数重载() {
-    cout << sum(1, 2) << endl;
-    cout << sum(2, 5.5) << endl;
+//    cout << sum(1, 2) << endl;
+//    cout << sum(2, 5.5) << endl;
 }
 
 void display(long num) {
@@ -40,7 +40,7 @@ void 二义性() {
 
 int main() {
 
-//    函数重载(); // C 语言不支持重载
+    函数重载(); // C 语言不支持重载
     二义性();
     std::cout << "Hello, World!" << std::endl;
     return 0;
