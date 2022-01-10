@@ -24,3 +24,13 @@ file(GLOB ${myProName}
         base/01_基本操作/${myPath}/*.c
         base/01_基本操作/${myPath}/*.h)
 add_executable(${myProName} ${${myProName}})
+
+#第4个项目
+set(myPath 04_内联函数)
+set(myProName 04_Proj)
+project(${myProName})
+file(GLOB ${myProName}
+        base/01_基本操作/${myPath}/*.cpp
+        base/01_基本操作/${myPath}/*.c
+        base/01_基本操作/${myPath}/*.h)
+add_executable(${myProName} ${${myProName}})
