@@ -1,4 +1,7 @@
 #include <iostream>
+extern "C" {
+#include "test.h"
+}
 
 // 内联函数
 inline int sum (int a, int b) {
@@ -6,6 +9,9 @@ inline int sum (int a, int b) {
 }
 // 宏
 #define sum2(a, b) ((a) + (a) + (b) + (b))
+
+
+void testTea();
 
 int main() {
 
@@ -48,5 +54,81 @@ int main() {
         std::cout << a++ + a++ + b++ + b++ << std::endl;
     }
 
+    // 1. 测试指针类型
+    std::cout << "-------------------" << std::endl;
+    test();
+
+    // 2, 例子
+    testTea();
+
     return 0;
+}
+
+void testTea() {
+    // 老师例子
+    int a = 10;
+    int b = 20;
+    int& ta = a;
+
+    int* pa = &a;
+    int*& tpa = pa;
+
+
+    std::cout << "a = " << a << std::endl;
+    std::cout << "&a = " << &a << std::endl;
+    std::cout << "ta = " << ta << std::endl;
+    std::cout << "&ta = " << &ta << std::endl;
+    std::cout << "*pa = " << *pa << std::endl;
+    std::cout << "pa = " << pa << std::endl;
+    std::cout << "&pa = " << &pa << std::endl;
+    std::cout << "*tpa = " << *tpa << std::endl;
+    std::cout << "tpa = " << tpa << std::endl;
+    std::cout << "&tpa = " << &tpa << std::endl;
+    std::cout << "*&tpa = " << *&tpa << std::endl;
+
+
+
+
+    tpa = &b;
+
+    std::cout << "*pa = " << *pa << std::endl;
+    std::cout << "pa = " << pa << std::endl;
+    std::cout << "&pa = " << &pa << std::endl;
+    std::cout << "*tpa = " << *tpa << std::endl;
+    std::cout << "tpa = " << tpa << std::endl;
+    std::cout << "&tpa = " << &tpa << std::endl;
+    std::cout << "*&tpa = " << *&tpa << std::endl;
+
+    *pa = 30;
+    std::cout << "a = "  << a << std::endl;
+    std::cout << "b = " << b << std::endl;
+
+
+    long c = 100;
+    int d = 200;
+    int e = 400;
+    int f = 500;;
+    int g = 500;
+    int h = 500;
+    long* tp = &c;
+
+
+    std::cout << "&c =  " << &c << std::endl;
+    std::cout << "&d  =  " << &d << std::endl;
+    std::cout << "&e =  " << &e << std::endl;
+    std::cout << "&f =  " << &f << std::endl;
+    std::cout << "&g =  " << &g << std::endl;
+    std::cout << "&h =  " << &h << std::endl;
+
+    std::cout << "*tp =  " << *tp << std::endl;
+    std::cout << "tp  =  " << tp << std::endl;
+    std::cout << "&tp =  " << &tp << std::endl;
+    tp++;
+    std::cout << "*tp =  " << *tp << std::endl;
+    std::cout << "tp  =  " << tp << std::endl;
+    std::cout << "&tp =  " << &tp << std::endl;
+
+
+
+
 }
