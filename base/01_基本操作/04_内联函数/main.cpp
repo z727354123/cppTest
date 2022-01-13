@@ -47,6 +47,11 @@ void refTest() {
 struct Stu {
     int age;
 };
+int getNum() {
+    return 10;
+}
+
+void refUsefull();
 
 void constTest() {
     const Stu str = {20};
@@ -75,9 +80,24 @@ void constTest() {
     int age = 10;
     const int *p0 = &age; // *p0 是常量, p0 不是常量
     int const *p1 = &age; // 同上
+    // 不能通过 指针修改 所指向的内容, 可以修改 指针的指向
     int *const p2 = &age; // p2 是常量, *p2 不是常量
+    // 不能修改 指针的指向, 但是可以修改 指针所指向的内容
     const int *const p3 = &age; // 都是常量
     int const *const p4 = &age; // 同上
+
+    // 引用的本质就是指针
+    // int  & const tmpAge = age;
+    // 上一个版本不会错,
+    // 代表就是 指针指向 不能改, 相当于 废话
+
+    const int &rAge = age;
+    // 不能通过 引用修改 所指向的内容
+
+    // 结论: const 必须放在 & 符号的左边,
+    // 才能算是 常引用
+
+
 
     int age2 = 20;
     p0 = &age2;
@@ -127,6 +147,108 @@ void constTest() {
 
     student = &oldStu;
 
+    // 4. 常引用
+    int num = 10;
+    const int &num2 = num;
+    // num2 = 20;
+
+
+    // 常引用的 特点
+    // 1. 可以指向 临时数据
+    const int &rNum = 30;
+    std::cout << "rNum = " << rNum << std::endl;
+    std::cout << "&rNum = " << &rNum << std::endl;
+    // 2. 可以指向 表达式
+    // int &rNum2 = age + age; // Non-const lvalue reference to type 'int' cannot bind to a temporary of type 'int'
+    const int &rNum2 = age + age;
+    // 3. 可以指向 返回值
+    const int &rNum3 = getNum();
+    // 4. 指向不同 类型的 引用
+    const double &rNum4 = age;
+    const int &rInt4 = rNum4;
+    std::cout << "age = " << age << std::endl;
+    std::cout << "rNum4 = " << rNum4 << std::endl;
+    std::cout << "rInt4 = " << rInt4 << std::endl;
+    age = 33;
+    // 当 常引用 指向了 不同类型的 数据是, 会产生 临时变量,
+    // 即 引用指向的 并不是 初始化时 的 哪个变量
+    std::cout << "age = " << age << std::endl;
+    std::cout << "rNum4 = " << rNum4 << std::endl;
+    std::cout << "rInt4 = " << rInt4 << std::endl;
+
+    // 5用途
+    refUsefull();
+
+}
+int sumTwo1(int &a, int &b) {
+    return a + b;
+}
+int sumTwo2(const int &a, const int &b) {
+    std::cout << "const a = " << a << " b = " << b << std::endl;
+    return a + b;
+}
+
+int sumTwo3(const int &a, const int &b) {
+    std::cout << "const a = " << a << " b = " << b << std::endl;
+    return a + b;
+}
+int sumTwo3(int &a, int &b) {
+    std::cout << "normal a = " << a << " b = " << b << std::endl;
+    return a + b;
+}
+
+int sumTwo4(const int a, const int b) {
+    std::cout << "const a = " << a << " b = " << b << std::endl;
+    return a + b;
+}
+// int sumTwo4(int a, int b) {
+//     std::cout << "normal a = " << a << " b = " << b << std::endl;
+//     return a + b;
+// }
+
+
+int sumTwo5(int *a, int *b) {
+    std::cout << "nor a = " << *a << " b = " << *b << std::endl;
+    return *a + *b;
+}
+// sumTwo5(int *a, int *b) { 跟这个一模一样
+// int sumTwo5( int * const a,  int * const b) {
+//     std::cout << "const a = " << *a << " b = " << *b << std::endl;
+//     return *a + *b;
+// }
+int sumTwo5(const int *a, const int *b) {
+    std::cout << "const a = " << *a << " b = " << *b << std::endl;
+    return *a + *b;
+}
+
+void refUsefull() {
+    const int num1 = 10;
+    const int num2 = 20;
+    int num3 = 30;
+    int num4 = 40;
+    // 这里 的 引用形参 无法兼容 两者
+    // sumTwo1(num1, num2); // No matching function for call to 'sumTwo1'
+    // sumTwo1(30, 40);
+    sumTwo1(num3, num4);
+
+    // 这里可以
+    sumTwo2(num3, num4);
+    sumTwo2(num1, num2);
+    sumTwo2(30, 40);
+    // 可以构成重载
+    sumTwo3(num3, num4); // 进的是 非 常引用
+    sumTwo3(num1, num2);
+    sumTwo3(30, 40); // 进的是常引用, 非常引用进不去的, 才到 常引用
+    sumTwo3(num4, 40); // 进的是常引用, 非常引用进不去的, 才到 常引用
+    // 普通函数 + const 无法 重载
+    sumTwo4(num3, num4);
+    sumTwo4(num1, num2);
+    sumTwo4(30, 40);
+    sumTwo4(num4, 40);
+    // 试试指针 能不能 重载
+    sumTwo5(&num1, &num2); // 1 只能 常量
+    sumTwo5(&num3, &num4);
+    sumTwo5(&num1, &num4); // 跟常引用 类似
 
 }
 
